@@ -61,7 +61,6 @@
 //   shuffleDeck();
 //   dealCards();
 // };
-
 const cards = [
   "a",
   "a",

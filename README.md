@@ -14,7 +14,6 @@ Briefly show the HTML & CSS.
 
 Show the JavaScript and discuss your favorite function.
 
-
 -Share the experience:
 
 What was your biggest challenge?
