@@ -1,83 +1,46 @@
+let player1Hand = [];
+let player2Hand = [];
+let discardPile = [];
 const cards = [
-  "a",
-  "a",
-  "b",
-  "b",
-  "c",
-  "c",
-  "d",
-  "d",
-  "e",
-  "e",
-  "f",
-  "f",
-  "g",
-  "g",
-  "h",
-  "h",
-  "i",
-  "i",
-  "j",
-  "j",
-  "lone",
+  "card1",
+  "card1",
+  "card2",
+  "card2",
+  "card3",
+  "card3",
+  "card4",
+  "card4",
+  "card5",
+  "card5",
+  "oldMaid",
 ];
 
-const shuffleDeck = () => {
-  let currentIndex = cards.length,
-    tempValue,
-    randomIndex;
-
-  while (currentIndex !== 0) {
-    randomIndex = Math.floor(Math.random() * currentIndex);
-    currentIndex--;
-
-    tempValue = cards[currentIndex];
-    cards[currentIndex] = cards[randomIndex];
-    cards[randomIndex] = tempValue;
+//shuffle deck function
+const shuffle = (array) => {
+  for (let i = array.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [array[i], array[j]] = [array[j], array[i]];
   }
+  return array;
 };
-let player1 = [];
-let player2 = [];
 
-function dealCards() {
-  for (let i = 0; i < cards.length; i += 2) {
-    player1.push(cards[i]);
-    player2.push(cards[i + 1]);
-  }
-  return [player1, player2];
+//called the function in HTML upon clicking START
+const dealCards = () => {
+  //shuffle the deck
+  const shuffledCards = shuffle(cards);
+  //get first half of deck + 1 extra card
+  player1Hand = shuffledCards.slice(0, 6);
+  //get second half of deck
+  player2Hand = shuffledCards.slice(7, 11);
+  //display it
+  document.querySelector("#player1Cards").innerHTML = player1Hand
+    .map((card) => `<div class='card'>${card}</div>`)
+    .join("");
+  document.querySelector("#player2Cards").innerHTML = player2Hand
+    .map((card) => `<div class='card'>${card}</div>`)
+    .join("");
+};
+
+const player2DiscardPairs =() =>{
+  
 }
-
-const startGame = () => {
-  shuffleDeck();
-  let players = dealCards();
-  player1 = players[0];
-  player2 = players[1];
-  document.querySelector(
-    "#p1-cards"
-  ).innerHTML = `Player 1 hand: ${player1.join(", ")}`;
-  document.querySelector(
-    "#p2-cards"
-  ).innerHTML = `Player 2 hand: ${player2.join(", ")}`;
-  console.log("Player 1's Hand: " + player1.join(", "));
-  console.log("Player 2's Hand: " + player2.join(", "));
-};
-
-const startButton = document.querySelector("#startButton");
-startButton.addEventListener("click", startGame);
-
-const checkForMatch = (arr) => {
-  for (i = 0; i < arr.length; i++) {
-    for (j = 0; j < arr.length; j++) {
-      if (arr[i] === arr[j]) {
-        console.log(`pairs: ${arr[i]}, ${arr[j]}`);
-        arr.pop(arr[i]);
-        arr.pop(arr[j]);
-        return arr;
-      }
-    }
-  }
-};
-
-let player1HasMatch = checkForMatch(player1);
-console.log(player1HasMatch);
-// let player2HasMatch = checkForMatch(player2Hand);

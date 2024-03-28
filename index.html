@@ -3,18 +3,27 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Lone</title>
     <link rel="stylesheet" type="text/css" href="style.css" />
     <script src="main.js" defer></script>
+    <title>Lone</title>
   </head>
   <body>
-    <div><button class="button" id="startButton">Start</button></div>
-    <div><p id="p1-cards">Player 1 cards:</p></div>
-    <div><p id="p2-cards">Player 2 cards:</p></div>
-    <div><button class="button" id="discard-button">Discard Pairs</button></div>
-    <div><p id="discard">Discard Pile:</p></div>
-    <div>
-      <button class="button" id="choose-card-button">Select Card</button>
+    <h2>Lone - An Old Maid inspired game</h2>
+    <div id="player1">
+      <h3>Player 1 Cards:</h3>
+      <div id="player1Cards"></div>
+    </div>
+    <div id="player2">
+      <h3>Player 2 Cards:</h3>
+      <div id="player2Cards"></div>
+      <div>
+        <button onclick="dealCards()">Start</button>
+        <button onclick="player2DiscardPairs()">Discard Pairs-P2</button>
+        <button onclick="player1DiscardPairs()">End Turn</button>
+      </div>
+      <div id="discardPile">
+      <h3>Discarded:</h3>
+      <div id="discardedCards"></div>
     </div>
   </body>
 </html>
