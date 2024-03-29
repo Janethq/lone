@@ -37,28 +37,35 @@ const dealCards = () => {
   document.querySelector("#player1Cards").innerHTML = player1Hand
     .map((card) => `<div class='card'>${card}</div>`)
     .join("");
+
   document.querySelector("#player2Cards").innerHTML = player2Hand
     .map((card) => `<div class='card'>${card}</div>`)
     .join("");
+  //MAKE P1 CLICKABLE AND SELECTABLE
+  //make selection of random card from p1hand
+  //???
 };
 
 const player2DiscardPairs = () => {
   checkForPairs(player2Hand);
 };
 
-//check if theres pairs
 const checkForPairs = (handArray) => {
-  let pairs = handArray.reduce((acc, curr) => {
-    if (handArray.indexOf(curr) !== handArray.lastIndexOf(curr)) {
-      acc.push(curr);
+  let pairs = [];
+  // discard the first pair found in handArray
+  handArray.reduce((acc, curr) => {
+    if (
+      handArray.indexOf(curr) !== handArray.lastIndexOf(curr) &&
+      pairs.length === 0
+    ) {
+      pairs.push(curr, curr);
     }
     return acc;
   }, []);
 
-  console.log(`pairs: ${pairs}`);
+  console.log(`p2 pairs: ${pairs}`);
 
   if (pairs.length >= 1) {
-    theresPairs = true;
     console.log("there are pairs");
     document.querySelector("#discardedCards").innerHTML = pairs
       .map((card) => `<div class='card'>${card}</div>`)
@@ -66,13 +73,23 @@ const checkForPairs = (handArray) => {
     //update player2Hand without discarded pairs
     player2Hand = player2Hand.filter((card) => !pairs.includes(card));
     console.log(`Updated player 2 hand: ${player2Hand}`);
+    //display it
     document.querySelector("#player2Cards").innerHTML = player2Hand
       .map((card) => `<div class='card'>${card}</div>`)
       .join("");
   } else {
     document.querySelector("#discardedCards").innerHTML =
       "You have no pairs right now";
-    console.log("no pairs");
+    console.log("p2 no pairs");
   }
   return pairs;
+};
+
+//write logic for computer gameplay
+const player1Turn = () => {
+  //discard pairs if any
+  //select random card from p2 hand
+  //display updated p1 hand
+  //write win logic
+  //enable discard pairs button for p2 to start turn again
 };
