@@ -41,10 +41,18 @@ const dealCards = () => {
   document.querySelector("#player2Cards").innerHTML = player2Hand
     .map((card) => `<div class='card'>${card}</div>`)
     .join("");
-  //MAKE P1 CLICKABLE AND SELECTABLE
-  //make selection of random card from p1hand
-  //???
-};
+
+player1Hand.forEach(card => {
+  //callback event to click card
+  const selectCard = () =>{
+  console.log('card clicked')}
+  const element = document.getElementById("player1Cards");
+  element.addEventListener('click', selectCard)})
+  //remove card from p1 handArray
+  //display
+  //add card to p2 handArray
+  //display
+} 
 
 const player2DiscardPairs = () => {
   checkForPairs(player2Hand);
@@ -87,6 +95,7 @@ const checkForPairs = (handArray) => {
 
 //write logic for computer gameplay
 const player1Turn = () => {
+  checkForPairs(player1Hand);
   //discard pairs if any
   //select random card from p2 hand
   //display updated p1 hand
