@@ -1,7 +1,12 @@
 let player1Hand = [];
 let player2Hand = [];
 let discardPile = [];
-let theresPairs = false;
+let pairs = [];
+const MODE_START_GAME = "MODE_START_GAME";
+const MODE_P2_TURN = "MODE_P2_TURN";
+const MODE_P1_TURN = "MODE_P1_TURN";
+let gameState = MODE_START_GAME;
+
 const cards = [
   "card1",
   "card1",
@@ -15,6 +20,39 @@ const cards = [
   "card5",
   "oldMaid",
 ];
+const main = () => {
+  gameState = MODE_START_GAME;
+  player1Hand = [];
+  player2Hand = [];
+  pairs = [];
+  dealCards();
+  gameState = MODE_P2_TURN;
+  if (gameState === MODE_P2_TURN) {
+    const player1CardsContainer = document.getElementById("player1Cards");
+    // Add event listeners to each card in player1Hand
+    player1Hand.forEach((card, idx) => {
+      const cardElement = player1CardsContainer.querySelector(
+        `.p1-card-${idx}`
+      );
+      cardElement.addEventListener("click", () => {
+        const clickedCard = player1Hand[idx]; // Store the clicked card
+        player1Hand.splice(idx, 1);
+        player2Hand.push(clickedCard); // Push the stored card to player2Hand
+        displayCards(player1Hand, player2Hand);
+        console.log(`Clicked player 1 card: ${clickedCard}`);
+      });
+    });
+  }
+};
+
+const player2DiscardPairs = () => {
+  gameState = MODE_P2_TURN;
+  checkForPairs(player2Hand);
+  if (player2Hand.length === 0) {
+    console.log("checked for p2 win");
+    checkforWin(player1Hand, player2Hand);
+  } else gameState = MODE_P1_TURN;
+};
 
 //shuffle deck function
 const shuffle = (array) => {
@@ -35,7 +73,9 @@ const dealCards = () => {
   player2Hand = shuffledCards.slice(6, 11);
   //display
   displayCards(player1Hand, player2Hand);
+};
 
+const p2ChooseCard = () => {
   const player1CardsContainer = document.getElementById("player1Cards");
   // Add event listeners to each card in player1Hand
   player1Hand.forEach((card, idx) => {
@@ -46,7 +86,7 @@ const dealCards = () => {
       //add to p2 array
       player2Hand.push(player1Hand[idx]);
       // WHY UNDEFINEDD?
-      //display updated
+      //display
       displayCards(player1Hand, player2Hand);
       console.log(`Clicked player 1 card: ${card}`);
     });
@@ -62,12 +102,8 @@ const displayCards = (player1Hand, player2Hand) => {
     .join("");
 };
 
-const player2DiscardPairs = () => {
-  checkForPairs(player2Hand);
-};
-
-let pairs = [];
 const checkForPairs = (handArray) => {
+  pairs = [];
   // discard the first pair found in handArray
   handArray.reduce((acc, curr) => {
     if (
@@ -104,26 +140,18 @@ const checkForPairs = (handArray) => {
 
 //write logic for computer gameplay
 const player1Turn = () => {
-  //generate random number for p2 hand array index
+  gameState = MODE_P1_TURN;
   const randomIdx = Math.floor(Math.random() * player2Hand.length);
-  //select random card from p2 hand
-  const player2CardsContainer = document.getElementById("player2Cards");
-  // Add event listeners to each card in player2Hand
-  player2Hand.forEach((card, idx) => {
-    const randomElement = player2CardsContainer.querySelector(
-      `.p2-card-${idx}`
-    );
-    randomElement.addEventListener("click", () => {
-      //remove card
+  const selectedCard = player2Hand[randomIdx];
 
-      //???
+  player2Hand.splice(randomIdx, 1);
+  player1Hand.push(selectedCard);
 
-      console.log(`selected player 2 card: ${card}`);
-    });
-  });
-  //discard pairs if any
-  //empty out pairs array
-  pairs = [];
+  displayCards(player1Hand, player2Hand);
+  console.log(`selected p2 card: ${selectedCard}`);
+
+  // Check for pairs in the updated player1Hand array
+  const pairs = [];
   player1Hand.reduce((acc, curr) => {
     if (
       player1Hand.indexOf(curr) !== player1Hand.lastIndexOf(curr) &&
@@ -133,6 +161,7 @@ const player1Turn = () => {
     }
     return acc;
   }, []);
+
   console.log(`pairs: ${pairs}`);
 
   if (pairs.length >= 1) {
@@ -140,24 +169,29 @@ const player1Turn = () => {
     document.querySelector("#discardedCards").innerHTML = pairs
       .map((card) => `<div class='card'>${card}</div>`)
       .join("");
-    for (let i = player1Hand.length - 1; i >= 0; i--) {
-      if (pairs.includes(player1Hand[i])) {
-        player1Hand.splice(i, 1);
-      }
-    }
+
+    // Remove pairs from player1Hand
+    pairs.forEach((pair) => {
+      const pairIndex = player1Hand.indexOf(pair);
+      player1Hand.splice(pairIndex, 1);
+    });
+
     console.log(`Updated player 1 hand: ${player1Hand}`);
-    //display
     displayCards(player1Hand, player2Hand);
   } else {
     document.querySelector("#discardedCards").innerHTML =
       "player 1 has no pairs right now";
     console.log("p1 no pairs");
   }
-  //SWITCH TO P2 TURN
-  //???
+
+  if (player1Hand.length === 0) {
+    console.log("checked for comp win");
+    checkforWin(player1Hand, player2Hand);
+  } else {
+    gameState = MODE_P2_TURN;
+  }
 };
 
-//write win logic (when either p1 or p2 hand array .length === 0, trigger win)
 const checkforWin = (player1Hand, player2Hand) => {
   if (player1Hand.length === 0) {
     document.querySelector("#player1Cards").innerHTML = "COMPUTER WINS";
