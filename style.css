@@ -1,7 +1,17 @@
 .card {
-  width: 55px;
-  height: 70px;
-  border: 2px solid black;
-  margin: 10px;
-  display: inline-block;
+  width: 80px; /* Set the width of the card */
+  height: 120px; /* Set the height of the card */
+  margin: 5px; /* Add some margin around the card */
+  padding: 5px; /* Add padding inside the card */
+  border: 1px solid #333; /* Add a border around the card */
+  border-radius: 5px; /* Add border radius for rounded corners */
+  display: inline-block; /* Make the cards display inline so they are horizontally aligned */
+}
+
+/* Style for card images */
+.card-image {
+  width: 10%; /* Make the card image take the full width of the card container */
+  height: 50%; /* Make the card image take the full height of the card container */
+  object-fit: cover; /* Ensure that the image covers the entire container */
+  border-radius: 5px; /* Add border radius for rounded corners */
 }

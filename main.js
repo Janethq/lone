@@ -93,11 +93,27 @@ const p2ChooseCard = () => {
 };
 
 const displayCards = (player1Hand, player2Hand) => {
+  const cardImages = {
+    card1: "./bird-card.png",
+    card2: "./elephant-card.png",
+    card3: "./rabbit-card.png",
+    card4: "./tiger-card.png",
+    card5: "./zebra-card.png",
+    oldMaid: "./lone-card.png",
+  };
+
   document.querySelector("#player1Cards").innerHTML = player1Hand
-    .map((card, idx) => `<div class='p1-card-${idx} card'>${card}</div>`)
+    .map(
+      (card, idx) =>
+        `<img class='p1-card-${idx} card-image' src='${cardImages[card]}' alt='${card}'>`
+    )
     .join("");
+
   document.querySelector("#player2Cards").innerHTML = player2Hand
-    .map((card, idx) => `<div class='p2-card-${idx} card'>${card}</div>`)
+    .map(
+      (card, idx) =>
+        `<img class='p2-card-${idx} card-image' src='${cardImages[card]}' alt='${card}'>`
+    )
     .join("");
 };
 
