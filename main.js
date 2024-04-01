@@ -46,7 +46,6 @@ const main = () => {
 };
 
 const player2DiscardPairs = () => {
-  gameState = MODE_P2_TURN;
   checkForPairs(player2Hand);
   if (player2Hand.length === 0) {
     console.log("checked for p2 win");
@@ -189,6 +188,20 @@ const player1Turn = () => {
     checkforWin(player1Hand, player2Hand);
   } else {
     gameState = MODE_P2_TURN;
+    if (gameState === MODE_P2_TURN) {
+      player1CardsContainer = document.getElementById("player1Cards");
+      // Add event listeners to each card in player1Hand
+      player1Hand.forEach((card, idx) => {
+        cardElement = player1CardsContainer.querySelector(`.p1-card-${idx}`);
+        cardElement.addEventListener("click", () => {
+          clickedCard = player1Hand[idx]; // Store the clicked card
+          player1Hand.splice(idx, 1);
+          player2Hand.push(clickedCard); // Push the stored card to player2Hand
+          displayCards(player1Hand, player2Hand);
+          console.log(`Clicked player 1 card: ${clickedCard}`);
+        });
+      });
+    }
   }
 };
 
