@@ -7,26 +7,37 @@
     <script src="main.js" defer></script>
     <title>Lone</title>
     <link rel="icon" type="image/x-icon" href="lone-favicon.ico">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Play:wght@400;700&display=swap" rel="stylesheet">
   </head>
-  <body>
+  <body background = ./background.png>
     <h2>Lone - An Old Maid inspired game</h2>
     <div id="player1">
-      <h3>Player 1 Cards:</h3>
+      <h3>Computer Cards:</h3>
       <div id="player1Cards"></div>
     </div>
     <div id="player2">
-      <h3>Player 2 Cards:</h3>
+      <h3>Your Cards:</h3>
       <div id="player2Cards"></div>
+      </div>
       <br/>
       <div>
-        <button onclick="main()">Start</button>
-        <button onclick="player2DiscardPairs()">Discard Pairs-P2</button>
-        <button onclick="player1Turn()">End Turn</button>
+        <button onclick="main()" id="start-button" class="button">
+          <span class="front">Start</span>
+        </button>
+        <button onclick="player2DiscardPairs()" id="discard-button" class="button">
+          <span class="front">Discard</span>
+        </button>
+        <button onclick="player1Turn()" id="end-turn-button" class="button">
+          <span class="front">Done</span>
+        </button>
       </div>
       <br/>
       <div id="discardPile">
       <h3>Discarded:</h3>
       <div id="discardedCards"></div>
     </div>
+
   </body>
 </html>

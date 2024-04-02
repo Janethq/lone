@@ -1,17 +1,80 @@
+body {
+  background-repeat: no-repeat;
+  background-size: 100%;
+  width: 960px; 
+  margin: 0 auto;
+}
+
+h2 {
+  font-family: "Play", sans-serif;
+  font-size: large;
+  font-weight: 700;
+  font-style: bold;
+  color: #d8bf9f;
+  border-radius: 15px;
+}
+
+h3 {
+  font-family: "Play", sans-serif;
+  font-size: smaller;
+  font-weight: 500;
+  font-style: bold;
+  color: #201d1a;
+  border-radius: 15px;
+}
+
 .card {
-  width: 80px; /* Set the width of the card */
-  height: 120px; /* Set the height of the card */
-  margin: 5px; /* Add some margin around the card */
-  padding: 5px; /* Add padding inside the card */
-  border: 1px solid #333; /* Add a border around the card */
-  border-radius: 5px; /* Add border radius for rounded corners */
-  display: inline-block; /* Make the cards display inline so they are horizontally aligned */
+  display: inline-block; /* horizontally aligned */
 }
 
 /* Style for card images */
 .card-image {
-  width: 10%; /* Make the card image take the full width of the card container */
-  height: 50%; /* Make the card image take the full height of the card container */
+  width: 15%;
   object-fit: cover; /* Ensure that the image covers the entire container */
-  border-radius: 5px; /* Add border radius for rounded corners */
+  border-radius: 10px;
+}
+
+/* button tutorial: https://www.joshwcomeau.com/animation/3d-button/#color-and-aesthetics-7 */
+.button {
+  background: #d8bf9f;
+  border: none;
+  border-radius: 12px;
+  padding: 0;
+  cursor: pointer;
+  font-family: "Play", sans-serif;
+}
+.front {
+  display: block;
+  padding: 12px 42px;
+  border-radius: 12px;
+  font-size: 1rem;
+  background: #000000;
+  background-size: 100%;
+  color: #d8bf9f;
+  transform: translateY(-4px);
+}
+
+.button:active .front {
+  transform: translateY(-2px);
+}
+
+.button:disabled .front{
+  background: grey;
+}
+
+.button:focus:not(:focus-visible) {
+  outline: none;
+}
+
+/* style for card containers */
+#player1 {
+  background: hsl(34, 42%, 74%, 20%);
+}
+
+#player2 {
+  background: hsl(34, 42%, 74%, 20%);
+}
+
+#discardPile {
+  background: hsl(34, 42%, 74%, 20%);
 }

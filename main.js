@@ -20,8 +20,34 @@ const cards = [
   "card5",
   "oldMaid",
 ];
+
+const cardImages = {
+  card1: "./bird-card.png",
+  card2: "./elephant-card.png",
+  card3: "./rabbit-card.png",
+  card4: "./tiger-card.png",
+  card5: "./zebra-card.png",
+  oldMaid: "./lone-card.png",
+};
+
+const coveredCard = {
+  cardBack: "./card-back.png"
+}
+
+//to disable or enable buttons
+const startButton = document.getElementById("start-button");
+const discardButton = document.getElementById("discard-button");
+const doneButton = document.getElementById("end-turn-button");
+
+startButton.disabled = false;
+discardButton.disabled = true;
+doneButton.disabled = true;
+
 const main = () => {
   gameState = MODE_START_GAME;
+  startButton.disabled = true
+  discardButton.disabled = true
+  doneButton.disabled = true
   player1Hand = [];
   player2Hand = [];
   pairs = [];
@@ -39,6 +65,9 @@ const main = () => {
         player1Hand.splice(idx, 1);
         player2Hand.push(clickedCard); // Push the stored card to player2Hand
         displayCards(player1Hand, player2Hand);
+         startButton.disabled = true;
+         discardButton.disabled = false;
+         doneButton.disabled = false;
         console.log(`Clicked player 1 card: ${clickedCard}`);
       });
     });
@@ -47,6 +76,9 @@ const main = () => {
 
 const player2DiscardPairs = () => {
   checkForPairs(player2Hand);
+   startButton.disabled = true;
+   discardButton.disabled = false;
+   doneButton.disabled = false;
   if (player2Hand.length === 0) {
     console.log("checked for p2 win");
     checkforWin(player1Hand, player2Hand);
@@ -93,33 +125,24 @@ const p2ChooseCard = () => {
 };
 
 const displayCards = (player1Hand, player2Hand) => {
-  const cardImages = {
-    card1: "./bird-card.png",
-    card2: "./elephant-card.png",
-    card3: "./rabbit-card.png",
-    card4: "./tiger-card.png",
-    card5: "./zebra-card.png",
-    oldMaid: "./lone-card.png",
-  };
-
   document.querySelector("#player1Cards").innerHTML = player1Hand
     .map(
       (card, idx) =>
         `<img class='p1-card-${idx} card-image' src='${cardImages[card]}' alt='${card}'>`
     )
-    .join("");
+    .join(" ");
 
   document.querySelector("#player2Cards").innerHTML = player2Hand
     .map(
       (card, idx) =>
         `<img class='p2-card-${idx} card-image' src='${cardImages[card]}' alt='${card}'>`
     )
-    .join("");
+    .join(" ");
 };
 
 const checkForPairs = (handArray) => {
   pairs = [];
-  // discard the first pair found in handArray
+  // Find and store pairs
   handArray.reduce((acc, curr) => {
     if (
       handArray.indexOf(curr) !== handArray.lastIndexOf(curr) &&
@@ -129,27 +152,28 @@ const checkForPairs = (handArray) => {
     }
     return acc;
   }, []);
-  console.log(`pairs: ${pairs}`);
 
   if (pairs.length >= 1) {
-    console.log("there are pairs");
     document.querySelector("#discardedCards").innerHTML = pairs
-      .map((card) => `<div class='card'>${card}</div>`)
-      .join("");
-    //iterates over player2Hand array in reverse order to avoid index shifting when removing elements. check if current card is included in the pairs array and removes it from player2Hand if yes
+      .map(
+        (card) =>
+          `<img class='pair-card card-image' src='${cardImages[card]}' alt='${card}'>`
+      )
+      .join(" ");
+
+    // Remove pairs from player2Hand
     for (let i = player2Hand.length - 1; i >= 0; i--) {
       if (pairs.includes(player2Hand[i])) {
         player2Hand.splice(i, 1);
       }
     }
-    console.log(`Updated player 2 hand: ${player2Hand}`);
-    //display it
+
     displayCards(player1Hand, player2Hand);
   } else {
     document.querySelector("#discardedCards").innerHTML =
       "You have no pairs right now";
-    console.log("p2 no pairs");
   }
+
   return pairs;
 };
 
@@ -166,7 +190,8 @@ const player1Turn = () => {
   console.log(`selected p2 card: ${selectedCard}`);
 
   // Check for pairs in the updated player1Hand array
-  const pairs = [];
+  pairs = [];
+  // Find and store pairs
   player1Hand.reduce((acc, curr) => {
     if (
       player1Hand.indexOf(curr) !== player1Hand.lastIndexOf(curr) &&
@@ -177,26 +202,25 @@ const player1Turn = () => {
     return acc;
   }, []);
 
-  console.log(`pairs: ${pairs}`);
-
   if (pairs.length >= 1) {
-    console.log("there are pairs");
     document.querySelector("#discardedCards").innerHTML = pairs
-      .map((card) => `<div class='card'>${card}</div>`)
-      .join("");
+      .map(
+        (card) =>
+          `<img class='pair-card card-image' src='${cardImages[card]}' alt='${card}'>`
+      )
+      .join(" ");
 
-    // Remove pairs from player1Hand
-    pairs.forEach((pair) => {
-      const pairIndex = player1Hand.indexOf(pair);
-      player1Hand.splice(pairIndex, 1);
-    });
+    // Remove pairs from player2Hand
+    for (let i = player1Hand.length - 1; i >= 0; i--) {
+      if (pairs.includes(player1Hand[i])) {
+        player1Hand.splice(i, 1);
+      }
+    }
 
-    console.log(`Updated player 1 hand: ${player1Hand}`);
     displayCards(player1Hand, player2Hand);
   } else {
     document.querySelector("#discardedCards").innerHTML =
-      "player 1 has no pairs right now";
-    console.log("p1 no pairs");
+      "Computer has no pairs right now";
   }
 
   if (player1Hand.length === 0) {
@@ -223,8 +247,14 @@ const player1Turn = () => {
 
 const checkforWin = (player1Hand, player2Hand) => {
   if (player1Hand.length === 0) {
+       startButton.disabled = false;
+       discardButton.disabled = true;
+       doneButton.disabled = true;
     document.querySelector("#player1Cards").innerHTML = "COMPUTER WINS";
   } else if (player2Hand.length === 0) {
+    startButton.disabled = false;
+    discardButton.disabled = true;
+    doneButton.disabled = true;
     document.querySelector("#player2Cards").innerHTML = "YOU WIN";
   }
 };
