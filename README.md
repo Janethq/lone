@@ -7,10 +7,10 @@ Don’t be lonely! Avoid being left alone by aiming to pair up cards at each tur
 </br>
 <h2>Description and Rules</h2>
 <ol>
-<li><bold>start</bold> Upon starting the game, cards will be dealt at random to each player. One player will have an extra card. At this point, don’t fret if you end up with Lone!</li>
-<li><bold>click any card from computer</bold> Select any card from your opponent by clicking on it. This card will be added into your hands.</li>
-<li><bold>discard</bold> If you see two similar cards, congratulations, you have a pair! Discard the pair by clicking the discard button. Be mindful, you can only discard once per turn. If you have no pairs, click ‘Done’.</li>
-<li><bold>done</bold> Click Done to end your turn, and your opponent will commence their turn. In the same way, they will select a random card from you and discard a pair of their own if they do end up with a pair. If your opponent happens to select a Lone card, you just got rid of the Lone card and increased your chance of winning! However, you risk getting a card that can be paired up taken away if you forget to discard your pair during your turn.</li>
+<li>[start] Upon starting the game, cards will be dealt at random to each player. One player will have an extra card. At this point, don’t fret if you end up with Lone!</li>
+<li>[click any card from computer] Select any card from your opponent by clicking on it. This card will be added into your hands.</li>
+<li>[discard] If you see two similar cards, congratulations, you have a pair! Discard the pair by clicking the discard button. Be mindful, you can only discard once per turn. If you have no pairs, click ‘Done’.</li>
+<li>[done] Click Done to end your turn, and your opponent will commence their turn. In the same way, they will select a random card from you and discard a pair of their own if they do end up with a pair. If your opponent happens to select a Lone card, you just got rid of the Lone card and increased your chance of winning! However, you risk getting a card that can be paired up taken away if you forget to discard your pair during your turn.</li>
 </ol>
   </br>
 <h2>How to win?</h2>
