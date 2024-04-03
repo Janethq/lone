@@ -1,7 +1,8 @@
 body {
-  background-repeat: no-repeat;
+  background-repeat: repeat;
   background-size: 100%;
-  width: 960px; 
+  width: 960px;
+  height: 100vh;
   margin: 0 auto;
 }
 
@@ -29,7 +30,7 @@ h3 {
 
 /* Style for card images */
 .card-image {
-  width: 15%;
+  width: 13%;
   object-fit: cover; /* Ensure that the image covers the entire container */
   border-radius: 10px;
 }
@@ -58,7 +59,7 @@ h3 {
   transform: translateY(-2px);
 }
 
-.button:disabled .front{
+.button:disabled .front {
   background: grey;
 }
 
@@ -69,6 +70,7 @@ h3 {
 /* style for card containers */
 #player1 {
   background: hsl(34, 42%, 74%, 20%);
+  height: fit-content;
 }
 
 #player2 {
@@ -77,4 +79,16 @@ h3 {
 
 #discardPile {
   background: hsl(34, 42%, 74%, 20%);
+}
+
+#gameMsg {
+  background: hsl(34, 42%, 74%, 20%);
+}
+
+#player1Cards, #player2Cards {
+  background-image: url("./container-background.png"); /* Set background image */
+  background-size: cover; /* Cover the entire container */
+  background-position: center;
+  height: 100%;
+  padding: 10%;
 }

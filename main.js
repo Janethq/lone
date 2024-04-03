@@ -7,6 +7,8 @@ const MODE_P2_TURN = "MODE_P2_TURN";
 const MODE_P1_TURN = "MODE_P1_TURN";
 let gameState = MODE_START_GAME;
 
+let gameMessage = document.querySelector("#message");
+
 const cards = [
   "card1",
   "card1",
@@ -21,6 +23,20 @@ const cards = [
   "oldMaid",
 ];
 
+// const cards = [
+//   { name: "card1", isOpen: true },
+//   { name: "card1", isOpen: true },
+//   { name: "card2", isOpen: true },
+//   { name: "card2", isOpen: true },
+//   { name: "card3", isOpen: true },
+//   { name: "card3", isOpen: true },
+//   { name: "card4", isOpen: true },
+//   { name: "card4", isOpen: true },
+//   { name: "card5", isOpen: true },
+//   { name: "card5", isOpen: true },
+//   { name: "oldMaid", isOpen: true },
+// ];
+
 const cardImages = {
   card1: "./bird-card.png",
   card2: "./elephant-card.png",
@@ -31,8 +47,8 @@ const cardImages = {
 };
 
 const coveredCard = {
-  cardBack: "./card-back.png"
-}
+  cardBack: "./card-back.png",
+};
 
 //to disable or enable buttons
 const startButton = document.getElementById("start-button");
@@ -45,9 +61,9 @@ doneButton.disabled = true;
 
 const main = () => {
   gameState = MODE_START_GAME;
-  startButton.disabled = true
-  discardButton.disabled = true
-  doneButton.disabled = true
+  startButton.disabled = true;
+  discardButton.disabled = true;
+  doneButton.disabled = true;
   player1Hand = [];
   player2Hand = [];
   pairs = [];
@@ -65,9 +81,9 @@ const main = () => {
         player1Hand.splice(idx, 1);
         player2Hand.push(clickedCard); // Push the stored card to player2Hand
         displayCards(player1Hand, player2Hand);
-         startButton.disabled = true;
-         discardButton.disabled = false;
-         doneButton.disabled = false;
+        startButton.disabled = true;
+        discardButton.disabled = false;
+        doneButton.disabled = false;
         console.log(`Clicked player 1 card: ${clickedCard}`);
       });
     });
@@ -76,9 +92,9 @@ const main = () => {
 
 const player2DiscardPairs = () => {
   checkForPairs(player2Hand);
-   startButton.disabled = true;
-   discardButton.disabled = false;
-   doneButton.disabled = false;
+  startButton.disabled = true;
+  discardButton.disabled = false;
+  doneButton.disabled = false;
   if (player2Hand.length === 0) {
     console.log("checked for p2 win");
     checkforWin(player1Hand, player2Hand);
@@ -100,6 +116,9 @@ const dealCards = () => {
   const shuffledCards = shuffle(cards);
   //get first half of deck + 1 extra card
   player1Hand = shuffledCards.slice(0, 6);
+  // player1Hand = player1Hand.map((card) => ({ name: card.name, isOpen: false }));
+  // console.log(player1Hand);
+
   //get second half of deck
   player2Hand = shuffledCards.slice(6, 11);
   //display
@@ -125,17 +144,27 @@ const p2ChooseCard = () => {
 };
 
 const displayCards = (player1Hand, player2Hand) => {
+  // document.querySelector("#player1Cards").innerHTML = player1Hand
+  //   .map(
+  //     (card, idx) =>
+  //       `<img class=‘p1-card-${idx} card-image’ src=’${
+  //         card.isOpen ? cardImages[card.name] : coveredCard
+  //       }' alt=‘${card.name}’>`
+  //   )
+  //   .join(" ");
   document.querySelector("#player1Cards").innerHTML = player1Hand
     .map(
       (card, idx) =>
-        `<img class='p1-card-${idx} card-image' src='${cardImages[card]}' alt='${card}'>`
+        `<img class='p1-card-${idx} card-image' src=${coveredCard.cardBack} alt='${coveredCard.cardBack}'>`
     )
     .join(" ");
 
   document.querySelector("#player2Cards").innerHTML = player2Hand
     .map(
       (card, idx) =>
-        `<img class='p2-card-${idx} card-image' src='${cardImages[card]}' alt='${card}'>`
+        `<img class='p2-card-${idx} card-image' src='${
+          cardImages[card]
+        }' alt='${card}'>`
     )
     .join(" ");
 };
@@ -247,9 +276,9 @@ const player1Turn = () => {
 
 const checkforWin = (player1Hand, player2Hand) => {
   if (player1Hand.length === 0) {
-       startButton.disabled = false;
-       discardButton.disabled = true;
-       doneButton.disabled = true;
+    startButton.disabled = false;
+    discardButton.disabled = true;
+    doneButton.disabled = true;
     document.querySelector("#player1Cards").innerHTML = "COMPUTER WINS";
   } else if (player2Hand.length === 0) {
     startButton.disabled = false;
