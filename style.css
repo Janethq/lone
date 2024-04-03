@@ -1,6 +1,7 @@
 body {
-  background-repeat: repeat;
-  background-size: 100%;
+  background-image: url('./background.png');
+  background-repeat: no-repeat;
+  background-size: cover;
   width: 960px;
   height: 100vh;
   margin: 0 auto;
@@ -30,7 +31,7 @@ h3 {
 
 /* Style for card images */
 .card-image {
-  width: 13%;
+  width: 16%;
   object-fit: cover; /* Ensure that the image covers the entire container */
   border-radius: 10px;
 }
@@ -67,28 +68,3 @@ h3 {
   outline: none;
 }
 
-/* style for card containers */
-#player1 {
-  background: hsl(34, 42%, 74%);
-  height: fit-content;
-}
-
-#player2 {
-  background: hsl(34, 42%, 74%);
-}
-
-#discardPile {
-  background: hsl(34, 42%, 74%);
-}
-
-#gameMsg {
-  background: hsl(34, 42%, 74%);
-}
-
-#player1Cards, #player2Cards, #discardedCards {
-  background-image: url("./container-background.png"); /* Set background image */
-  background-size: cover; /* Cover the entire container */
-  background-position: center;
-  height: 100%;
-  padding: 10%;
-}
