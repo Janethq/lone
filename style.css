@@ -6,9 +6,9 @@ body {
   margin: 0 auto;
 }
 
-h2 {
+h1 {
   font-family: "Play", sans-serif;
-  font-size: large;
+  font-size: larger;
   font-weight: 700;
   font-style: bold;
   color: #d8bf9f;
@@ -69,23 +69,23 @@ h3 {
 
 /* style for card containers */
 #player1 {
-  background: hsl(34, 42%, 74%, 20%);
+  background: hsl(34, 42%, 74%);
   height: fit-content;
 }
 
 #player2 {
-  background: hsl(34, 42%, 74%, 20%);
+  background: hsl(34, 42%, 74%);
 }
 
 #discardPile {
-  background: hsl(34, 42%, 74%, 20%);
+  background: hsl(34, 42%, 74%);
 }
 
 #gameMsg {
-  background: hsl(34, 42%, 74%, 20%);
+  background: hsl(34, 42%, 74%);
 }
 
-#player1Cards, #player2Cards {
+#player1Cards, #player2Cards, #discardedCards {
   background-image: url("./container-background.png"); /* Set background image */
   background-size: cover; /* Cover the entire container */
   background-position: center;
