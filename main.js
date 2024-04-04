@@ -7,7 +7,7 @@ const MODE_P2_TURN = "MODE_P2_TURN";
 const MODE_P1_TURN = "MODE_P1_TURN";
 let gameState = MODE_START_GAME;
 
-document.querySelector("#message").innerHTML = 'Click Start to play.'
+document.querySelector("#message").innerHTML = "Click Start to play.";
 
 const cards = [
   "card1",
@@ -20,6 +20,10 @@ const cards = [
   "card4",
   "card5",
   "card5",
+  "card6",
+  "card6",
+  "card7",
+  "card7",
   "oldMaid",
 ];
 
@@ -29,6 +33,8 @@ const cardImages = {
   card3: "./rabbit-card.png",
   card4: "./tiger-card.png",
   card5: "./zebra-card.png",
+  card6: "./pig-card.png",
+  card7: "./giraffe-card.png",
   oldMaid: "./lone-card.png",
 };
 
@@ -54,10 +60,11 @@ const main = () => {
   player2Hand = [];
   pairs = [];
   dealCards();
+  document.querySelector("#discardedCards").innerHTML = "";
   gameState = MODE_P2_TURN;
   if (gameState === MODE_P2_TURN) {
     //shuffle p1 hand
-    player1Hand = shuffle(player1Hand)
+    player1Hand = shuffle(player1Hand);
     document.querySelector("#message").innerHTML =
       "Select a card from your opponent.";
     const player1CardsContainer = document.getElementById("player1Cards");
@@ -109,12 +116,12 @@ const dealCards = () => {
   //shuffle the deck
   const shuffledCards = shuffle(cards);
   //get first half of deck + 1 extra card
-  player1Hand = shuffledCards.slice(0, 6);
+  player1Hand = shuffledCards.slice(0, 8);
   // player1Hand = player1Hand.map((card) => ({ name: card.name, isOpen: false }));
   // console.log(player1Hand);
 
   //get second half of deck
-  player2Hand = shuffledCards.slice(6, 11);
+  player2Hand = shuffledCards.slice(8, 15);
   //display
   displayCards(player1Hand, player2Hand);
 };
@@ -148,9 +155,7 @@ const displayCards = (player1Hand, player2Hand) => {
   document.querySelector("#player2Cards").innerHTML = player2Hand
     .map(
       (card, idx) =>
-        `<img class='p2-card-${idx} card-image' src='${
-          cardImages[card]
-        }' alt='${card}'>`
+        `<img class='p2-card-${idx} card-image' src='${cardImages[card]}' alt='${card}'>`
     )
     .join(" ");
 };
@@ -244,7 +249,7 @@ const player1Turn = () => {
     gameState = MODE_P2_TURN;
     if (gameState === MODE_P2_TURN) {
       //shuffle p1 hand
-      player1Hand = shuffle(player1Hand)
+      player1Hand = shuffle(player1Hand);
       document.querySelector("#message").innerHTML =
         "Select a card from your opponent.";
       player1CardsContainer = document.getElementById("player1Cards");
@@ -279,4 +284,4 @@ const checkforWin = (player1Hand, player2Hand) => {
     document.querySelector("#message").innerHTML =
       "YOU WIN! Click start to play again.";
   }
-}
+};

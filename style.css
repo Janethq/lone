@@ -3,7 +3,7 @@ body {
   background-repeat: no-repeat;
   background-size: cover;
   width: 960px;
-  height: 100vh;
+  height: stretch;
   margin: 0 auto;
 }
 
@@ -21,8 +21,9 @@ h3 {
   font-size: smaller;
   font-weight: 500;
   font-style: bold;
-  color: #201d1a;
-  border-radius: 15px;
+  color: #d8bf9f;
+  background-color: rgb(31, 28, 28);
+  border-radius: 5px;
 }
 
 .card {
@@ -31,7 +32,7 @@ h3 {
 
 /* Style for card images */
 .card-image {
-  width: 16%;
+  width: 9%;
   object-fit: cover; /* Ensure that the image covers the entire container */
   border-radius: 10px;
 }
