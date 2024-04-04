@@ -27,17 +27,18 @@ let cards = [
   "oldMaid",
 ];
 
+let selectedCards = [];
+
 document.querySelector("form").addEventListener("submit", function (event) {
   event.preventDefault(); // Prevent the form from submitting
-
   const selectedNumCards = document.querySelector("#numCards").value; // Get the selected number of cards
-
+  console.log(selectedNumCards);
   // Update the cards array based on the selected number of cards
-  cards = cards.slice(0, selectedNumCards);
+  selectedCards = cards.slice(0, selectedNumCards - 1); // Select all cards except the last one
+  selectedCards.push("oldMaid"); // Add the "oldMaid" card as the last selected card
 
-  console.log(updatedCards);
+  console.log(selectedCards);
 });
-
 
 const cardImages = {
   card1: "./bird-card.png",
@@ -126,7 +127,7 @@ const shuffle = (array) => {
 //called the function in HTML upon clicking START
 const dealCards = () => {
   //shuffle the deck
-  const shuffledCards = shuffle(cards);
+  const shuffledCards = shuffle(selectedCards);
   //get number of cards per player based on cards.length
   const numCardsPerPlayer = shuffledCards.length / 2;
   //get first half of deck + 1 extra card
@@ -283,6 +284,8 @@ const player1Turn = () => {
 };
 
 const checkforWin = (player1Hand, player2Hand) => {
+  console.log("checkforwin is running");
+  console.log(player1Hand.length, player2Hand.length);
   if (player1Hand.length === 0 || player2Hand.length === 1) {
     startButton.disabled = false;
     discardButton.disabled = true;
@@ -293,11 +296,13 @@ const checkforWin = (player1Hand, player2Hand) => {
     startButton.disabled = false;
     discardButton.disabled = true;
     doneButton.disabled = true;
+    const test = document.querySelector("#player1Cards");
+    console.log(test);
     //uncover Lone card to show computer losing state
     document.querySelector("#player1Cards").innerHTML = player1Hand
       .map(
         (card, idx) =>
-          `<img class='p1-card-${idx} card-image' src=${cardImages[oldMaid]}>`
+          `<img class='p1-card-${idx} card-image' src=${cardImages[card]}>`
       )
       .join(" ");
     document.querySelector("#message").innerHTML =
