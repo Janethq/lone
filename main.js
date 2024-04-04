@@ -9,7 +9,7 @@ let gameState = MODE_START_GAME;
 
 document.querySelector("#message").innerHTML = "Click Start to play.";
 
-const cards = [
+let cards = [
   "card1",
   "card1",
   "card2",
@@ -26,6 +26,18 @@ const cards = [
   "card7",
   "oldMaid",
 ];
+
+document.querySelector("form").addEventListener("submit", function (event) {
+  event.preventDefault(); // Prevent the form from submitting
+
+  const selectedNumCards = document.querySelector("#numCards").value; // Get the selected number of cards
+
+  // Update the cards array based on the selected number of cards
+  cards = cards.slice(0, selectedNumCards);
+
+  console.log(updatedCards);
+});
+
 
 const cardImages = {
   card1: "./bird-card.png",
@@ -115,13 +127,12 @@ const shuffle = (array) => {
 const dealCards = () => {
   //shuffle the deck
   const shuffledCards = shuffle(cards);
+  //get number of cards per player based on cards.length
+  const numCardsPerPlayer = shuffledCards.length / 2;
   //get first half of deck + 1 extra card
-  player1Hand = shuffledCards.slice(0, 8);
-  // player1Hand = player1Hand.map((card) => ({ name: card.name, isOpen: false }));
-  // console.log(player1Hand);
-
-  //get second half of deck
-  player2Hand = shuffledCards.slice(8, 15);
+  player1Hand = shuffledCards.slice(0, numCardsPerPlayer);
+  //get remaining
+  player2Hand = shuffledCards.slice(numCardsPerPlayer);
   //display
   displayCards(player1Hand, player2Hand);
 };
@@ -189,6 +200,7 @@ const checkForPairs = (handArray) => {
     }
     displayCards(player1Hand, player2Hand);
   } else {
+    discardButton.disabled = true;
     document.querySelector("#discardedCards").innerHTML =
       "You have no pairs right now. Click 'Done' instead.";
   }
@@ -281,6 +293,13 @@ const checkforWin = (player1Hand, player2Hand) => {
     startButton.disabled = false;
     discardButton.disabled = true;
     doneButton.disabled = true;
+    //uncover Lone card to show computer losing state
+    document.querySelector("#player1Cards").innerHTML = player1Hand
+      .map(
+        (card, idx) =>
+          `<img class='p1-card-${idx} card-image' src=${cardImages[oldMaid]}>`
+      )
+      .join(" ");
     document.querySelector("#message").innerHTML =
       "YOU WIN! Click start to play again.";
   }
