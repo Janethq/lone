@@ -29,6 +29,13 @@ let cards = [
 
 let selectedCards = [];
 
+const checkEndGameCondition = () => {
+  return (
+    (player1Hand.length === 0 && player2Hand.length === 1) ||
+    (player2Hand.length === 0 && player1Hand.length === 1)
+  );
+};
+
 document.querySelector("form").addEventListener("submit", function (event) {
   event.preventDefault(); // Prevent the form from submitting
   const selectedNumCards = document.querySelector("#numCards").value; // Get the selected number of cards
@@ -103,13 +110,15 @@ const main = () => {
 };
 
 const player2DiscardPairs = () => {
+  console.log("player2 discard pairs");
   checkForPairs(player2Hand);
   document.querySelector("#message").innerHTML =
     "Your turn is over, select 'done'.";
   startButton.disabled = true;
   discardButton.disabled = false;
   doneButton.disabled = false;
-  if (player2Hand.length === 0) {
+  console.log(player2Hand.length);
+  if (checkEndGameCondition()) {
     console.log("checked for p2 win");
     checkforWin(player1Hand, player2Hand);
   } else gameState = MODE_P1_TURN;
@@ -254,8 +263,8 @@ const player1Turn = () => {
     document.querySelector("#discardedCards").innerHTML =
       "Computer has no pairs right now";
   }
-
-  if (player1Hand.length === 0) {
+  console.log(player1Hand.length);
+  if (checkEndGameCondition()) {
     console.log("checked for comp win");
     checkforWin(player1Hand, player2Hand);
   } else {
