@@ -37,12 +37,11 @@ const checkEndGameCondition = () => {
 };
 
 document.querySelector("form").addEventListener("submit", function (event) {
-  event.preventDefault(); // Prevent the form from submitting
-  const selectedNumCards = document.querySelector("#numCards").value; // Get the selected number of cards
+  event.preventDefault();
+  const selectedNumCards = document.querySelector("#numCards").value;
   console.log(selectedNumCards);
-  // Update the cards array based on the selected number of cards
-  selectedCards = cards.slice(0, selectedNumCards - 1); // Select all cards except the last one
-  selectedCards.push("oldMaid"); // Add the "oldMaid" card as the last selected card
+  selectedCards = cards.slice(0, selectedNumCards - 1);
+  selectedCards.push("oldMaid");
 
   console.log(selectedCards);
 });
@@ -62,7 +61,6 @@ const coveredCard = {
   cardBack: "./card-back.png",
 };
 
-//to disable or enable buttons
 const startButton = document.getElementById("start-button");
 const discardButton = document.getElementById("discard-button");
 const doneButton = document.getElementById("end-turn-button");
@@ -83,20 +81,18 @@ const main = () => {
   document.querySelector("#discardedCards").innerHTML = "";
   gameState = MODE_P2_TURN;
   if (gameState === MODE_P2_TURN) {
-    //shuffle p1 hand
     player1Hand = shuffle(player1Hand);
     document.querySelector("#message").innerHTML =
       "Select a card from your opponent.";
     const player1CardsContainer = document.getElementById("player1Cards");
-    // Add event listeners to each card in player1Hand
     player1Hand.forEach((card, idx) => {
       const cardElement = player1CardsContainer.querySelector(
         `.p1-card-${idx}`
       );
       cardElement.addEventListener("click", () => {
-        const clickedCard = player1Hand[idx]; // Store the clicked card
+        const clickedCard = player1Hand[idx];
         player1Hand.splice(idx, 1);
-        player2Hand.push(clickedCard); // Push the stored card to player2Hand
+        player2Hand.push(clickedCard);
         displayCards(player1Hand, player2Hand);
         document.querySelector("#message").innerHTML =
           "Discard the pair if you have one. Otherwise, select 'Done'.";
@@ -124,7 +120,6 @@ const player2DiscardPairs = () => {
   } else gameState = MODE_P1_TURN;
 };
 
-//shuffle deck function
 const shuffle = (array) => {
   for (let i = array.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
@@ -133,32 +128,21 @@ const shuffle = (array) => {
   return array;
 };
 
-//called the function in HTML upon clicking START
 const dealCards = () => {
-  //shuffle the deck
   const shuffledCards = shuffle(selectedCards);
-  //get number of cards per player based on cards.length
   const numCardsPerPlayer = shuffledCards.length / 2;
-  //get first half of deck + 1 extra card
   player1Hand = shuffledCards.slice(0, numCardsPerPlayer);
-  //get remaining
   player2Hand = shuffledCards.slice(numCardsPerPlayer);
-  //display
   displayCards(player1Hand, player2Hand);
 };
 
 const p2ChooseCard = () => {
   const player1CardsContainer = document.getElementById("player1Cards");
-  // Add event listeners to each card in player1Hand
   player1Hand.forEach((card, idx) => {
     const cardElement = player1CardsContainer.querySelector(`.p1-card-${idx}`);
     cardElement.addEventListener("click", () => {
-      //remove the clicked card from p1 array
       player1Hand.splice(idx, 1);
-      //add to p2 array
       player2Hand.push(player1Hand[idx]);
-      // WHY UNDEFINEDD?
-      //display
       displayCards(player1Hand, player2Hand);
       console.log(`Clicked player 1 card: ${card}`);
     });
@@ -183,7 +167,6 @@ const displayCards = (player1Hand, player2Hand) => {
 
 const checkForPairs = (handArray) => {
   pairs = [];
-  // Find and store pairs
   handArray.reduce((acc, curr) => {
     if (
       handArray.indexOf(curr) !== handArray.lastIndexOf(curr) &&
@@ -202,7 +185,6 @@ const checkForPairs = (handArray) => {
       )
       .join(" ");
 
-    // Remove pairs from player2Hand
     for (let i = player2Hand.length - 1; i >= 0; i--) {
       if (pairs.includes(player2Hand[i])) {
         player2Hand.splice(i, 1);
@@ -218,7 +200,6 @@ const checkForPairs = (handArray) => {
   return pairs;
 };
 
-//write logic for computer gameplay
 const player1Turn = () => {
   gameState = MODE_P1_TURN;
   const randomIdx = Math.floor(Math.random() * player2Hand.length);
@@ -230,9 +211,7 @@ const player1Turn = () => {
   displayCards(player1Hand, player2Hand);
   console.log(`selected p2 card: ${selectedCard}`);
 
-  // Check for pairs in the updated player1Hand array
   pairs = [];
-  // Find and store pairs
   player1Hand.reduce((acc, curr) => {
     if (
       player1Hand.indexOf(curr) !== player1Hand.lastIndexOf(curr) &&
@@ -251,7 +230,6 @@ const player1Turn = () => {
       )
       .join(" ");
 
-    // Remove pairs from player2Hand
     for (let i = player1Hand.length - 1; i >= 0; i--) {
       if (pairs.includes(player1Hand[i])) {
         player1Hand.splice(i, 1);
@@ -270,18 +248,16 @@ const player1Turn = () => {
   } else {
     gameState = MODE_P2_TURN;
     if (gameState === MODE_P2_TURN) {
-      //shuffle p1 hand
       player1Hand = shuffle(player1Hand);
       document.querySelector("#message").innerHTML =
         "Select a card from your opponent.";
       player1CardsContainer = document.getElementById("player1Cards");
-      // Add event listeners to each card in player1Hand
       player1Hand.forEach((card, idx) => {
         cardElement = player1CardsContainer.querySelector(`.p1-card-${idx}`);
         cardElement.addEventListener("click", () => {
-          clickedCard = player1Hand[idx]; // Store the clicked card
+          clickedCard = player1Hand[idx];
           player1Hand.splice(idx, 1);
-          player2Hand.push(clickedCard); // Push the stored card to player2Hand
+          player2Hand.push(clickedCard);
           document.querySelector("#message").innerHTML =
             "Discard the pair if you have one. Otherwise, select 'Done'.";
           displayCards(player1Hand, player2Hand);
@@ -307,7 +283,6 @@ const checkforWin = (player1Hand, player2Hand) => {
     doneButton.disabled = true;
     const test = document.querySelector("#player1Cards");
     console.log(test);
-    //uncover Lone card to show computer losing state
     document.querySelector("#player1Cards").innerHTML = player1Hand
       .map(
         (card, idx) =>
